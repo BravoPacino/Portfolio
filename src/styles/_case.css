@@ -1,0 +1,183 @@
+.c-case{
+  position: fixed; inset: 0; z-index: 80;
+  overflow-y: auto; overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+.c-case[hidden]{ display: none; }
+
+.c-case::before{
+  content: ""; position: fixed; inset: 0;
+  background: var(--c-bg);
+  opacity: 0; transition: opacity .24s var(--ease-soft);
+}
+.c-case.is-open::before{ opacity: 1; }
+
+.c-case__doc{
+  position: relative; z-index: 1;
+  width: min(100% - var(--gutter) * 2, 56rem);
+  margin-inline: auto;
+  padding-block: var(--sp-5) var(--sp-6);
+  display: grid; gap: var(--sp-4);
+}
+.c-case__doc:focus{ outline: none; }
+
+.c-case__head{ display: grid; gap: var(--sp-2); }
+.c-case__head h1{ font-size: var(--fs-4); }
+.c-case__lead{ font-size: var(--fs-1); max-width: var(--measure); color: var(--c-mute); }
+.c-case__lead strong{ color: var(--c-ink); font-weight: 600; }
+.c-case__links{ display: flex; flex-wrap: wrap; gap: var(--sp-2); margin: 0; }
+.c-case__links a{
+  color: var(--c-ink); text-decoration: none;
+  border: 1px solid color-mix(in srgb, var(--c-line) 70%, transparent);
+  padding: var(--sp-1) var(--sp-3);
+  font: 500 var(--fs--1)/1.6 var(--ff-mono);
+  letter-spacing: .14em; text-transform: uppercase;
+  transition: border-color var(--dur-1) var(--ease-out);
+}
+.c-case__links a::after{ content: " \2197"; }
+.c-case__links a:hover{ border-color: var(--c-ink); }
+.c-case__links a:focus-visible{ outline: 2px solid var(--c-ink); outline-offset: 2px; }
+
+.c-case__hero{
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: var(--c-bg-2);
+  border: 1px solid color-mix(in srgb, var(--c-line) 55%, transparent);
+  display: grid; place-items: center;
+}
+
+.c-case__body{ display: grid; gap: var(--sp-5); max-width: var(--measure); }
+.c-case__sec{ display: grid; gap: var(--sp-2); }
+.c-case__sec p + p{ margin-top: var(--sp-1); }
+.c-case__sec strong{ font-weight: 600; }
+.c-case__sec code{
+  font: 500 .92em/1 var(--ff-mono);
+  color: var(--c-warm);
+}
+
+.c-case__facts{ display: grid; gap: 0; margin: 0; }
+.c-case__facts > div{
+  display: grid; grid-template-columns: 9rem minmax(0, 1fr);
+  gap: var(--sp-2); align-items: baseline;
+  padding-block: var(--sp-2);
+  border-top: 1px solid color-mix(in srgb, var(--c-line) 40%, transparent);
+}
+.c-case__facts > div:last-child{
+  border-bottom: 1px solid color-mix(in srgb, var(--c-line) 40%, transparent);
+}
+.c-case__facts dt{
+  font: 500 var(--fs--1)/1.4 var(--ff-mono);
+  letter-spacing: .12em; text-transform: uppercase; color: var(--c-mute);
+}
+.c-case__facts dd{ margin: 0; }
+
+.c-case__list{ display: grid; gap: var(--sp-2); padding-left: 1.4em; }
+.c-case__list li::marker{ color: var(--c-mute); font-family: var(--ff-mono); }
+
+.c-case__note{
+  border-left: 2px solid var(--c-line);
+  padding: var(--sp-2) 0 var(--sp-2) var(--sp-3);
+  color: var(--c-mute);
+}
+.c-case__note strong{ color: var(--c-ink); }
+
+.c-case__close{
+  position: sticky; top: var(--sp-2); z-index: 2;
+  justify-self: start;
+  background: var(--c-bg); color: var(--c-ink); cursor: pointer;
+  border: 1px solid color-mix(in srgb, var(--c-line) 70%, transparent);
+  padding: var(--sp-1) var(--sp-3);
+  font: 500 var(--fs--1)/1.6 var(--ff-mono);
+  letter-spacing: .14em; text-transform: uppercase;
+  transition: border-color var(--dur-1) var(--ease-out);
+}
+.c-case__close:hover{ border-color: var(--c-ink); }
+
+.c-case__head, .c-case__body, .c-case__close{
+  opacity: 0; translate: 0 1.2rem;
+  transition: opacity .5s var(--ease-out) .2s, translate .5s var(--ease-out) .2s;
+}
+.c-case.is-open .c-case__head,
+.c-case.is-open .c-case__body,
+.c-case.is-open .c-case__close{ opacity: 1; translate: 0 0; }
+
+a.c-slide__figure{
+  text-decoration: none;
+  transition: border-color var(--dur-1) var(--ease-out);
+}
+a.c-slide__figure:hover{ border-color: color-mix(in srgb, var(--c-ink) 55%, transparent); }
+.c-slide__cta{
+  font: 500 var(--fs--1)/1.6 var(--ff-mono);
+  letter-spacing: .14em; text-transform: uppercase;
+  text-decoration-color: currentColor;
+}
+
+@media (max-width: 900px){
+  .c-case__doc{ padding-block: var(--sp-4) var(--sp-5); }
+  .c-case__facts > div{ grid-template-columns: 1fr; gap: var(--sp-1); }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .c-case__head, .c-case__body, .c-case__close{ translate: none; transition-duration: 1ms; }
+}
+
+.c-cursor{
+  position: fixed; inset: 0; z-index: 95;
+  pointer-events: none;
+  display: none;
+  --cur-line: var(--c-line);
+  --cur-hot:  var(--c-lit);
+  --cur-on:   var(--c-bg);
+}
+html.has-cursor .c-cursor{ display: block; }
+html.has-cursor, html.has-cursor *{ cursor: none; }
+html.cursor-off, html.cursor-off *{ cursor: revert; }
+html.cursor-off .c-cursor{ opacity: 0; }
+
+html.is-paper-ground .c-cursor{
+  --cur-line: var(--p-line);
+  --cur-hot:  var(--p-lit);
+  --cur-on:   var(--p-paper);
+}
+
+.c-cursor__ring, .c-cursor__dot{
+  position: absolute; top: 0; left: 0;
+  border-radius: 50%;
+  will-change: translate;
+}
+.c-cursor__ring{
+  width: 26px; height: 26px; margin: -13px 0 0 -13px;
+  border: 1px solid var(--cur-line);
+  scale: 1;
+  transition: scale .34s var(--ease-out),
+              background-color .34s var(--ease-out),
+              border-color .34s var(--ease-out);
+}
+.c-cursor__dot{
+  width: 4px; height: 4px; margin: -2px 0 0 -2px;
+  background: var(--cur-hot);
+  transition: opacity .2s var(--ease-out), scale .2s var(--ease-out);
+}
+html.is-hot .c-cursor__ring{
+  scale: 1.9;
+  background: var(--cur-hot);
+  border-color: var(--cur-hot);
+}
+html.is-hot .c-cursor__dot{ opacity: 0; scale: .3; }
+
+@media (prefers-reduced-motion: reduce){
+  .c-cursor__ring, .c-cursor__dot{ transition-duration: 1ms; }
+}
+
+.c-slide__figure img, .c-case__hero img{
+  width: 100%; height: 100%; display: block; object-fit: cover;
+}
+.c-slide__figure, .c-case__hero{ overflow: hidden; }
+.c-case__fig{ margin: var(--sp-2) 0; display: grid; gap: var(--sp-1); }
+.c-case__fig img{
+  width: 100%; height: auto; display: block;
+  border: 1px solid color-mix(in srgb, var(--c-line) 55%, transparent);
+}
+.c-case__fig figcaption{
+  font: 500 var(--fs--1)/1.5 var(--ff-mono); letter-spacing: .06em; color: var(--c-mute);
+}
