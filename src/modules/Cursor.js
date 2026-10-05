@@ -49,7 +49,7 @@ export default class Cursor extends Module {
   off(on) { this.root.classList.toggle('cursor-off', on); }
 
   render() {
-    if (this.paused || !this.root) return;
+    if (!this.root) return;
 
     const now = performance.now();
     const dt = Math.min(64, now - this.last);
@@ -67,8 +67,6 @@ export default class Cursor extends Module {
     this.ring.style.translate = `${this.rx.toFixed(1)}px ${this.ry.toFixed(1)}px`;
   }
 
-  pause()  { this.paused = true; }
-  resume() { this.paused = false; this.last = performance.now(); }
 
   destroy() {
     this.root?.classList.remove('has-cursor', 'is-hot', 'cursor-off');
