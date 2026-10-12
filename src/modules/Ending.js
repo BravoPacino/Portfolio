@@ -9,6 +9,8 @@ const BEAT = {
   drain: [0.74, 1.00],
 };
 
+const NOTES_AT = 0.6;
+
 const lerp = (a, b, t) => a + (b - a) * t;
 const mixRgb = (a, b, t) => [0, 1, 2].map((i) => lerp(a[i], b[i], t));
 const css255 = (c) => `rgb(${c.map((v) => Math.round(v * 255)).join(' ')})`;
@@ -32,6 +34,8 @@ export default class Ending extends Module {
 
     this.bindCopy();
     this.bindParts();
+    this.bindNotesLink();
+    if (location.hash === '#notes' && !document.documentElement.classList.contains('is-loading')) this.enter();
     this.fitSheet();
 
     if (this.stage && this.light.gl) {
@@ -91,9 +95,28 @@ export default class Ending extends Module {
     });
   }
 
-  goTo(where) {
+  bindNotesLink() {
+    this.on(document, 'click', (e) => {
+      const a = e.target.closest('a[href="#notes"]');
+      if (!a) return;
+      if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      e.preventDefault();
+      this.goTo('notes');
+      try { history.replaceState(null, '', '#notes'); } catch {}
+    });
+  }
+
+  enter() {
+    if (location.hash === '#notes') this.goTo('notes', { instant: true });
+  }
+
+  goTo(where, { instant = false } = {}) {
     let y = 0;
-    if (where !== 'hero') {
+    if (where === 'notes') {
+      const scroller = this.el.closest('[data-pin-scroller]') || this.el;
+      const top = scroller.getBoundingClientRect().top + window.scrollY;
+      y = top + Math.max(0, scroller.offsetHeight - window.innerHeight) * NOTES_AT;
+    } else if (where !== 'hero') {
       const rail = document.querySelector('.c-rail');
       if (!rail) return;
       y = rail.getBoundingClientRect().top + window.scrollY;
@@ -105,8 +128,13 @@ export default class Ending extends Module {
       }
     }
     const lenis = this.app?.lenis;
-    if (lenis && !this.reduce) lenis.scrollTo(y, { duration: 1.8 });
-    else window.scrollTo({ top: y, behavior: this.reduce ? 'auto' : 'smooth' });
+    if (instant || this.reduce) {
+      if (lenis) lenis.scrollTo(y, { immediate: true });
+      else window.scrollTo(0, y);
+      return;
+    }
+    if (lenis) lenis.scrollTo(y, { duration: 1.8 });
+    else window.scrollTo({ top: y, behavior: 'smooth' });
   }
 
   render() {

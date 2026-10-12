@@ -6,6 +6,16 @@
   <title>Brandon Liong Jia Chen — Interactive Developer, Penang</title>
   <meta name="description" content="Interactive web work from George Town, Penang.">
   <meta name="theme-color" content="#0e2b26">
+  <link rel="canonical" href="https://bravopacino.github.io/Portfolio/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bravopacino.github.io/Portfolio/">
+  <meta property="og:title" content="Brandon Liong Jia Chen — Interactive Developer, Penang">
+  <meta property="og:description" content="Interactive web work from George Town, Penang. Built, then measured.">
+  <meta property="og:image" content="https://bravopacino.github.io/Portfolio/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Opening screen: I take websites apart, beside a line drawing of Penang Island">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230e2b26'/%3E%3Cpath d='M4 21h24' stroke='%232f6b5c' stroke-width='1.5'/%3E%3Cpath d='M4 21h11' stroke='%23f0e2c8' stroke-width='1.5'/%3E%3Ccircle cx='15' cy='21' r='2.6' fill='%23f0e2c8'/%3E%3C/svg%3E">
 </head>
 <body>
@@ -129,19 +139,19 @@
                 <span class="u-label">One frame · 16.7 ms</span>
                 <span class="c-budget__read"><b data-budget-num>20.0</b> ms</span>
               </figcaption>
-              <div class="c-budget__bar" role="img" aria-label="A 16.7 millisecond frame budget. Before: the grain overlay alone costs 20 milliseconds, over budget. After: 0.09 milliseconds.">
+              <div class="c-budget__bar" role="img" aria-label="A 16.7 millisecond frame budget. The grain overlay alone costs 20 milliseconds, over budget. The louvre hero costs 0.09 milliseconds.">
                 <span class="c-budget__fill" data-budget-fill></span>
                 <span class="c-budget__edge" aria-hidden="true"></span>
               </div>
               <div class="c-budget__row">
                 <span class="c-budget__what" data-budget-what>The grain overlay, by itself.</span>
                 <button class="c-budget__toggle" type="button" data-budget-toggle aria-pressed="false">
-                  <span>before</span><span>after</span>
+                  <span>grain</span><span>louvre</span>
                 </button>
               </div>
               <p class="c-budget__fine">
-                Measured, not estimated. &ldquo;After&rdquo; is the louvre hero that replaced the shader
-                &mdash; the grain layer itself is still on the list.
+                Measured, not estimated. Two parts of the same site: the grain overlay is still on the list;
+                the louvre hero replaced a full-screen shader.
               </p>
             </figure>
           </div>
@@ -160,10 +170,10 @@
             <span class="u-label">C10</span><span>Two scales of noise, blended. The light that finds Penang on the first screen.</span><span class="u-label">one shader</span>
           </li>
           <li class="c-lab__item">
-            <span class="u-label">B11</span><span>Penang from open data, not a tracing. 260 points, 8 rings.</span><span class="u-label">pipeline</span>
+            <span class="u-label">B11</span><span>Penang from open data, not a tracing. 259 points, 8 rings.</span><span class="u-label">pipeline</span>
           </li>
           <li class="c-lab__item">
-            <span class="u-label">Bench</span><span>24 numbers from teardowns, each one made draggable. The grain figure above came out of it.</span><span class="u-label">24 demos</span>
+            <span class="u-label">Bench</span><span>25 numbers from teardowns, each one made draggable. The grain figure above was measured the same way.</span><span class="u-label">25 demos</span>
           </li>
         </ul>
       </div>
@@ -360,7 +370,7 @@
             <dl class="c-case__facts">
               <div>
                 <dt>Bundle</dt>
-                <dd>1,016 kB (282 kB gzipped). Three.js sits in the main bundle; nothing is split yet.</dd>
+                <dd>1,046 kB (294 kB gzipped). Three.js sits in the main bundle; nothing is split yet.</dd>
               </div>
               <div>
                 <dt>Grain overlay</dt>
@@ -388,7 +398,6 @@
               <li><strong>The grain overlay.</strong> Biggest single cost; a few pre-made noise tiles would do the same job for almost nothing.</li>
               <li><strong>Split the bundle.</strong> Three.js only serves two image effects; it does not need to block the first screen.</li>
               <li><strong>Merge the loops.</strong> Seven loops fighting in the same frame is where stutter comes from.</li>
-              <li><strong>Phone width.</strong> One section still pushes the page to 634 px wide on a 390 px screen.</li>
             </ol>
           </section>
 
@@ -434,7 +443,7 @@
             <p class="u-label">Premise</p>
             <p>
               A course project, built on my own with an AI assistant. PHP and MySQL with plain HTML, CSS and
-              JavaScript — no framework — about 8,800 lines across eight database tables.
+              JavaScript — no framework — about 7,200 lines across nine database tables.
             </p>
           </section>
 

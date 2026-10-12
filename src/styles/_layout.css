@@ -357,6 +357,7 @@
   position: absolute; top: 0; bottom: 0;
   display: flex; align-items: center; justify-content: center;
 }
+.c-roll__ch[hidden]{ display: none; }
 
 [data-reveal-item], [data-module-reveal]{
   opacity: .82; translate: 0 .6rem;

@@ -14,7 +14,15 @@ export default class Case extends Module {
     this.on(document, 'keydown', (e) => {
       if (e.key === 'Escape' && this.current) this.requestClose();
     });
-    this.on(window, 'popstate', () => { if (this.current) this.close(); });
+    this.on(window, 'popstate', (e) => {
+      const id = e.state?.case;
+      if (id && !this.current) {
+        this.open(id, this.figureFor(id), { push: false });
+        this.pushed = true;
+      } else if (!id && this.current) {
+        this.close();
+      }
+    });
 
     const id = new URLSearchParams(location.search).get('case');
     if (id) this.open(id, null, { push: false });
@@ -32,6 +40,11 @@ export default class Case extends Module {
     this.open(t.dataset.caseOpen, slide.querySelector?.('.c-slide__figure') || null);
 
     if (this.current) this.lastFocus = t;
+  }
+
+  figureFor(id) {
+    return document.querySelector(`.c-rail__slide [data-case-open="${id}"]`)
+      ?.closest('.c-rail__slide')?.querySelector('.c-slide__figure') || null;
   }
 
   open(id, fromEl, { push = true } = {}) {
@@ -89,6 +102,9 @@ export default class Case extends Module {
     clearTimeout(this.timer);
     this.timer = setTimeout(() => this.teardown(), back ? DUR : 240);
     this.current = null;
+    if (!this.pushed && new URLSearchParams(location.search).has('case')) {
+      try { history.replaceState(null, '', location.pathname + location.hash); } catch {}
+    }
   }
 
   flip(box, hero, rev) {

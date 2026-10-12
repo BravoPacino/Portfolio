@@ -110,7 +110,7 @@ export default class Rolodex extends Module {
 
   rest() {
     for (const c of this.chars) {
-      c.el.hidden = c.line !== this.n - 1;
+      c.el.hidden = c.line !== 0;
       if (!c.el.hidden) c.el.style.transform = 'none';
     }
   }
